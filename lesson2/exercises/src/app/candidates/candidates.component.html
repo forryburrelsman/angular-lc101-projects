@@ -6,7 +6,7 @@
             <h2>Candidates</h2>
             <ol>
                
-                <li *ngFor = "let candidate of candidates" (click) = 'choice = candidate.name; age = candidate.data.age; mass = candidate.data.mass; sidekick = candidate.data.sidekick'>{{candidate.name}}</li>
+                <li *ngFor = "let candidate of candidates" (click) = 'choice = candidate.name; image = candidate.image; age = candidate.data.age; mass = candidate.data.mass; sidekick = candidate.data.sidekick'>{{candidate.name}}</li>
                 
             </ol>
         </div>
@@ -24,21 +24,24 @@
         <div class="centered col-3">
             <h2>Sidekick</h2>
             <!-- Use *ngIf and the correct placeholder to display a sidekick's image -->
-            <img src="{{placeholder}}" alt="OOPS! No image available."/>
+            <img *ngIf = "choice !== '' " src="{{image}}" alt="OOPS! No image available."/>
         </div>
 
         <div class="crew col-3">
             <h2>Selected Crew</h2>
             <ul>
-                <li>Use *ngFor to list the selected crew.</li>
+                <li *ngFor = "let selected of crew">{{selected}}</li>
+                
             </ul>
             <!-- Add a "Clear Crew List" button here. -->
+            <button *ngIf = "crew.length !== 0" (click) = "crew = []" >Clear Crew List</button>
         </div>
     </div>
     <hr>
     <div class = 'centered'>
         <button (click) = "choice = ''">Clear Data & Image</button>
         <!-- Add a "Send on Mission" button here. -->
+        <button *ngIf = "choice && !crew.includes(choice) && crew.length < 3" (click) = "addToCrew(choice)">Send on Mission</button>
     </div>
 </div>
 
